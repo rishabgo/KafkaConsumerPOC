@@ -1,0 +1,6 @@
+kafka:
+  brokers: localhost:9092
+  topic:
+    library: library-topic
+  consumer:
+    group: group1

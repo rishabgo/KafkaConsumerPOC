@@ -1,0 +1,18 @@
+
+kafka:
+  brokers: localhost:9092
+  topic:
+    library: library-topic
+  consumer:
+    group: group1
+
+spring:
+  mysql:
+    datasource:
+      hikari:
+        connection-timeout: 20000
+        minimum-idle: 5
+        maximum-pool-size: 10
+        idle-timeout: 10000
+        max-lifetime: 1000
+        auto-commit: true

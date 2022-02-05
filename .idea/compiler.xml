@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.10/625fc0055674dff70dbc76efa36d0f2c89b04a24/lombok-1.18.10.jar" />
+        </processorPath>
+        <module name="library-events-consumer.library-events-consumer.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="library-events-consumer.library-events-consumer.main~1" target="11" />
+      <module name="library-events-consumer.library-events-consumer.test~1" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="library-events-consumer.library-events-consumer.main" options="--add-modules java.base,java.sql" />
+      <module name="library-events-consumer.library-events-consumer.main~1" options="--add-modules java.base,java.sql" />
+      <module name="library-events-consumer.library-events-consumer.test" options="--add-modules java.base" />
+      <module name="library-events-consumer.library-events-consumer.test~1" options="--add-modules java.base" />
+    </option>
+  </component>
+</project>
