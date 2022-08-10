@@ -1,33 +1,33 @@
-package com.kafka.libraryeventsconsumer.processor;
+package com.kafka.libraryeventsconsumer.processor.testcontainers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kafka.libraryeventsconsumer.entity.Book;
 import com.kafka.libraryeventsconsumer.entity.LibraryEvent;
 import com.kafka.libraryeventsconsumer.entity.LibraryEventType;
+import com.kafka.libraryeventsconsumer.processor.LibraryEventsProcessor;
 import com.kafka.libraryeventsconsumer.service.LibraryEventsService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
-import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -38,20 +38,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-//Integration test using @Embedded Kafka
-
+//Integration Test Using Kafka Test Conatiner
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
-@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://${kafka.brokers}"})
+@Testcontainers
 @DirtiesContext
-public class LibraryEventsProcessorIT {
-
-    static {
-        System.setProperty("KAFKA_BROKERS", "localhost:9092");
-    }
-
-    @Autowired
-    private EmbeddedKafkaBroker embeddedKafkaBroker;
+public class LibraryEventsProcessorIT extends AbstractContainerBaseTest {
 
     @Value("${kafka.topic.library}")
     private String topic;
@@ -72,8 +64,9 @@ public class LibraryEventsProcessorIT {
 
     @BeforeAll
     void setUp() {
-        Map<String, Object> configs = KafkaTestUtils.producerProps(embeddedKafkaBroker);
-        producer = new DefaultKafkaProducerFactory<>(configs, new StringSerializer(), new StringSerializer()).createProducer();
+        Map<String, Object> props = new HashMap<>();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_CONTAINER.getBootstrapServers());
+        producer = new DefaultKafkaProducerFactory<>(props, new StringSerializer(), new StringSerializer()).createProducer();
     }
 
     @AfterAll
