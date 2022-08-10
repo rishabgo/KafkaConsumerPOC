@@ -17,7 +17,7 @@ public class LibraryEventsService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void processLibraryEvent(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
+    public void processLibraryEvent(final ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
 
         final LibraryEvent libraryEvent;
         try {
@@ -28,7 +28,7 @@ public class LibraryEventsService {
         } catch (Exception ex) {
             throw new RuntimeException("Exception while processing message");
         }
-        
+
         validateLibraryEvent(libraryEvent);
     }
 

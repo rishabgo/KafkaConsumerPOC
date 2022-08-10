@@ -2,13 +2,10 @@ package com.kafka.libraryeventsconsumer.entity;
 
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
+@Data
 @Builder
 public class LibraryEvent {
     private String libraryEventId;
     private Book book;
-    @Setter
     private LibraryEventType eventType;
 }

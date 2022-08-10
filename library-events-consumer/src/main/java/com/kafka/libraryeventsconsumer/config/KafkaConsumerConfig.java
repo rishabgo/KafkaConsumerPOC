@@ -65,7 +65,6 @@ public class KafkaConsumerConfig {
         map.put(IllegalArgumentException.class, false);
 
         final SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(3, map);
-        retryPolicy.setMaxAttempts(3);
         return retryPolicy;
     }
 

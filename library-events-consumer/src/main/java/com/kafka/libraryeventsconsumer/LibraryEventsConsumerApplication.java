@@ -16,11 +16,4 @@ public class LibraryEventsConsumerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryEventsConsumerApplication.class, args);
 	}
-
-	@Bean(name="mysqlDataSource")
-	@ConfigurationProperties(prefix = "spring.mysql.datasource")
-	public DataSource mysqlDataSource() {
-		return DataSourceBuilder.create().build();
-	}
-
 }
